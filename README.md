@@ -5,17 +5,6 @@ Match-Point is a browser-based tennis match tracking web app built with vanilla 
 
 ---
 
-## Project Info
-
-| Field        | Details                            |
-|--------------|------------------------------------|
-| Course       | BCSE203E — Web Programming         |
-| Assignment   | Digital Assignment II              |
-| Semester     | Winter 2025 – 2026                 |
-| Developer    | Rohith Ram V (24BCE0543)           |
-| Institution  | VIT Bengaluru                      |
-
----
 
 ## Live Demo
 
@@ -110,15 +99,6 @@ match-point/
    git clone https://github.com/<your-username>/match-point.git
    ```
 2. Open `index.html` in any modern browser. No server or install needed.
-
----
-
-## GitHub Pages Deployment
-
-1. Push all files to a GitHub repository
-2. Go to **Settings → Pages**
-3. Set source to `main` branch, `/ (root)`
-4. Your site will be live at `https://<your-username>.github.io/match-point`
 
 ---
 
