@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clay Court — Tennis Match Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       LANDING PAGE
+  ══════════════════════════════════════ -->
+  <div id="landing">
+
+    <!-- Background court lines (SVG) -->
+    <svg class="court-bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect  x="160" y="80"  width="880" height="640" class="c-line"/>
+      <line  x1="600" y1="80"  x2="600"  y2="720"   class="c-line"/>
+      <line  x1="160" y1="295" x2="1040" y2="295"   class="c-line"/>
+      <line  x1="160" y1="505" x2="1040" y2="505"   class="c-line"/>
+      <line  x1="160" y1="400" x2="1040" y2="400"   class="c-line net-line"/>
+      <line  x1="600" y1="295" x2="600"  y2="505"   class="c-line"/>
+      <line  x1="260" y1="80"  x2="260"  y2="720"   class="c-line singles-line"/>
+      <line  x1="940" y1="80"  x2="940"  y2="720"   class="c-line singles-line"/>
+    </svg>
+
+    <!-- Dust radial overlay -->
+    <div class="dust-overlay"></div>
+
+    <!-- Floating tennis balls -->
+    <div class="ball ball-lg ball-pos-1">
+      <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="35" cy="35" r="33" fill="#C8E020"/>
+        <path d="M12 18 Q35 35 12 52" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" fill="none"/>
+        <path d="M58 18 Q35 35 58 52" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" fill="none"/>
+      </svg>
+    </div>
+    <div class="ball ball-md ball-pos-2">
+      <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="35" cy="35" r="33" fill="#C8E020"/>
+        <path d="M12 18 Q35 35 12 52" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
+        <path d="M58 18 Q35 35 58 52" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
+      </svg>
+    </div>
+    <div class="ball ball-sm ball-pos-3">
+      <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="35" cy="35" r="33" fill="#C8E020"/>
+        <path d="M12 18 Q35 35 12 52" stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"/>
+        <path d="M58 18 Q35 35 58 52" stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Main landing content -->
+    <div class="land-content">
+      <div class="land-badge">
+        <svg width="14" height="14" viewBox="0 0 70 70">
+          <circle cx="35" cy="35" r="33" fill="#C8E020"/>
+          <path d="M12 18Q35 35 12 52" stroke="rgba(0,0,0,0.4)" stroke-width="3" fill="none"/>
+          <path d="M58 18Q35 35 58 52" stroke="rgba(0,0,0,0.4)" stroke-width="3" fill="none"/>
+        </svg>
+        Tennis Match Tracker
+      </div>
+
+      <h1 class="land-title">
+        TRACK<br>YOUR <span class="title-gold">GAME.</span>
+      </h1>
+
+      <p class="land-sub">
+        Log matches <span class="sep">·</span> Analyze your stats <span class="sep">·</span> Improve your game
+      </p>
+
+      <!-- JS will hook onto this button in V1.1 -->
+      <button class="cta-btn" id="btn-start">Let's Get Started &nbsp;→</button>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+      <span>Your tracker awaits</span>
+      <svg width="16" height="9" viewBox="0 0 16 9" fill="none">
+        <path d="M1 1L8 7.5L15 1" stroke="rgba(255,248,240,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+  </div><!-- /landing -->
+
+
+  <!-- ══════════════════════════════════════
+       APP PAGE
+  ══════════════════════════════════════ -->
+  <div id="app">
+
+    <!-- Sticky header + tab nav -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="app-logo">
+          <div class="logo-ball"></div>
+          Clay Court
+        </div>
+      </div>
+      <nav class="tabs-nav">
+        <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-btn"        data-tab="log">Log Match</button>
+        <button class="tab-btn"        data-tab="history">Match History</button>
+      </nav>
+    </header>
+
+    <!-- App body -->
+    <main class="app-body">
+
+      <!-- ── DASHBOARD TAB ── -->
+      <section class="tab-panel active" id="panel-dashboard">
+
+        <div class="dash-grid">
+
+          <!-- LEFT COLUMN -->
+          <div class="dash-left">
+
+            <!-- Top stat cards -->
+            <div class="stat-strip">
+              <div class="stat-card">
+                <div class="stat-label">Total Matches</div>
+                <div class="stat-value">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Wins</div>
+                <div class="stat-value color-win">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Losses</div>
+                <div class="stat-value color-loss">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value">0<span class="stat-unit">%</span></div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Streak</div>
+                <div class="stat-value stat-streak">—</div>
+              </div>
+            </div>
+
+            <!-- Win rate progress bar -->
+            <div class="card progress-card">
+              <div class="card-heading">Win Rate Overview</div>
+              <div class="progress-row">
+                <span class="prog-label color-win">Wins</span>
+                <div class="progress-track">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="prog-label color-loss">Losses</span>
+              </div>
+              <div class="progress-counts">
+                <span class="color-win">0W</span>
+                <span class="color-loss">0L</span>
+              </div>
+            </div>
+
+            <!-- Recent matches preview -->
+            <div class="card recent-card">
+              <div class="card-heading">Recent Matches</div>
+              <div class="recent-list" id="recent-list">
+                <div class="empty-recent">No matches logged yet.</div>
+              </div>
+            </div>
+
+          </div><!-- /dash-left -->
+
+          <!-- RIGHT COLUMN -->
+          <div class="dash-right">
+
+            <!-- Surface breakdown -->
+            <div class="card surface-card">
+              <div class="card-heading">Performance by Surface</div>
+              <div class="surface-blocks">
+                <div class="surface-block s-clay">
+                  <div class="surf-name">Clay</div>
+                  <div class="surf-record">0W / 0L</div>
+                  <div class="surf-rate">—%</div>
+                </div>
+                <div class="surface-block s-hard">
+                  <div class="surf-name">Hard</div>
+                  <div class="surf-record">0W / 0L</div>
+                  <div class="surf-rate">—%</div>
+                </div>
+                <div class="surface-block s-grass">
+                  <div class="surf-name">Grass</div>
+                  <div class="surf-record">0W / 0L</div>
+                  <div class="surf-rate">—%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Opponent tracker -->
+            <div class="card opp-card">
+              <div class="card-heading">Head to Head</div>
+              <div class="opp-list" id="opp-list">
+                <div class="empty-recent">Log matches to see opponents.</div>
+              </div>
+            </div>
+
+            <!-- Reset button -->
+            <button class="reset-btn" id="btn-reset">↺ &nbsp;Reset All Data</button>
+
+          </div><!-- /dash-right -->
+
+        </div><!-- /dash-grid -->
+
+      </section><!-- /dashboard -->
+
+
+      <!-- ── LOG MATCH TAB ── -->
+      <section class="tab-panel" id="panel-log">
+
+        <div class="form-wrap">
+          <div class="form-card">
+            <p class="form-heading">Log a Match</p>
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="inp-opp">Opponent Name</label>
+                <input type="text" id="inp-opp" placeholder="e.g. Rahul">
+              </div>
+
+              <div class="form-group">
+                <label for="inp-date">Date</label>
+                <input type="date" id="inp-date">
+              </div>
+
+              <div class="form-group">
+                <label for="inp-my">Your Sets Won</label>
+                <input type="number" id="inp-my" min="0" max="5" placeholder="e.g. 2">
+              </div>
+
+              <div class="form-group">
+                <label for="inp-op">Opponent Sets Won</label>
+                <input type="number" id="inp-op" min="0" max="5" placeholder="e.g. 1">
+              </div>
+
+              <div class="form-group">
+                <label for="inp-surf">Surface</label>
+                <select id="inp-surf">
+                  <option value="Clay">Clay</option>
+                  <option value="Hard">Hard</option>
+                  <option value="Grass">Grass</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Result</label>
+                <div class="result-toggle">
+                  <div class="result-opt" id="opt-win">Win</div>
+                  <div class="result-opt" id="opt-loss">Loss</div>
+                </div>
+              </div>
+
+              <div class="form-group full">
+                <label for="inp-notes">Match Notes (optional)</label>
+                <input type="text" id="inp-notes" placeholder="e.g. Tight third set, played well on serve">
+              </div>
+
+            </div><!-- /form-grid -->
+
+            <!-- Advanced options (V1.4 will expand this) -->
+            <div class="advanced-toggle" id="adv-toggle">
+              <span>⊕ &nbsp;Advanced Stats</span>
+            </div>
+
+            <div class="advanced-section" id="adv-section">
+              <div class="adv-grid">
+                <div class="form-group">
+                  <label for="inp-aces">Aces</label>
+                  <input type="number" id="inp-aces" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <label for="inp-df">Double Faults</label>
+                  <input type="number" id="inp-df" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <label for="inp-winners">Winners</label>
+                  <input type="number" id="inp-winners" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <label for="inp-ue">Unforced Errors</label>
+                  <input type="number" id="inp-ue" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <label for="inp-bp-won">Break Points Won</label>
+                  <input type="number" id="inp-bp-won" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <label for="inp-bp-faced">Break Points Faced</label>
+                  <input type="number" id="inp-bp-faced" min="0" placeholder="0">
+                </div>
+              </div>
+            </div><!-- /advanced-section -->
+
+            <button class="submit-btn" id="btn-submit">Save Match</button>
+
+          </div><!-- /form-card -->
+        </div>
+
+      </section><!-- /log -->
+
+
+      <!-- ── MATCH HISTORY TAB ── -->
+      <section class="tab-panel" id="panel-history">
+
+        <div class="history-header">
+          <p class="form-heading">Match History</p>
+        </div>
+
+        <div class="filter-row">
+          <button class="filter-chip active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="win">Wins</button>
+          <button class="filter-chip" data-filter="loss">Losses</button>
+          <button class="filter-chip" data-filter="Clay">Clay</button>
+          <button class="filter-chip" data-filter="Hard">Hard</button>
+          <button class="filter-chip" data-filter="Grass">Grass</button>
+        </div>
+
+        <div id="match-list">
+          <div class="empty-state">
+            <div class="empty-icon">🎾</div>
+            <div class="empty-text">No matches logged yet.<br>Head to Log Match to get started.</div>
+          </div>
+        </div>
+
+      </section><!-- /history -->
+
+    </main><!-- /app-body -->
+
+  </div><!-- /app -->
+
+  <!-- Toast notification (JS controls visibility) -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Script linked — JS added in V1.1 -->
+  <script src="script.js"></script>
+
+</body>
+</html>
