@@ -4,11 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Match-Point</title>
+  <link rel="icon" type="image/png" href="icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Custom cursor — Arrow with ball attached at tail, moves as one unit -->
+  <div class="cursor-pointer" id="cursor-pointer">
+    <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+      <!-- Arrow in golden yellow — visible on both landing and app -->
+      <polygon points="5,2 5,28 13,21 17,31 21,29 17,19 27,19"
+               fill="#E8A020" stroke="#8B4800" stroke-width="1"
+               stroke-linejoin="round"/>
+      <!-- Ball fixed at tail of arrow -->
+      <circle cx="30" cy="34" r="9" fill="#C8E020"/>
+      <path d="M23 29.5 Q30 34 23 38.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.4" fill="none"/>
+      <path d="M37 29.5 Q30 34 37 38.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.4" fill="none"/>
+    </svg>
+  </div>
 
   <!-- ══════════════════════════════════════
        LANDING PAGE
@@ -201,8 +216,11 @@
               </div>
             </div>
 
-            <!-- Reset button -->
-            <button class="reset-btn" id="btn-reset">↺ &nbsp;Reset All Data</button>
+            <!-- Reset + Testing -->
+            <div class="reset-section">
+              <button class="reset-btn" id="btn-reset">↺ &nbsp;Reset All Data</button>
+              <button class="quickfill-btn" id="btn-quickfill">⚡ &nbsp;Quick Fill (Test)</button>
+            </div>
 
           </div><!-- /dash-right -->
 
@@ -335,11 +353,22 @@
 
   </div><!-- /app -->
 
-  <!-- Toast notification (JS controls visibility) -->
+  <!-- Toast notification -->
   <div class="toast" id="toast"></div>
 
-  <!-- Script linked — JS added in V1.1 -->
-  <script src="script.js"></script>
+  <!-- Custom reset confirmation modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-icon">↺</div>
+      <h2 class="modal-title">Reset all data?</h2>
+      <p class="modal-body">This will permanently delete all your match history. This cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" id="modal-cancel">Cancel</button>
+        <button class="modal-btn modal-confirm" id="modal-confirm">Yes, reset</button>
+      </div>
+    </div>
+  </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
